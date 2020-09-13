@@ -1,7 +1,7 @@
 
 import fetch from 'node-fetch';
 
-const jwtToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOm51bGwsImlzcyI6IjFZR3JjVV9PUk91U1htQUNENG9oSEEiLCJleHAiOjE2MDA1MTA0NzYsImlhdCI6MTU5OTkwNTY3NX0.0yi1y3u2R9sM0DuMDAc1lykSo9pwKssSBOwllMz6E2I";
+const jwtToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOm51bGwsImlzcyI6IlF1emV0NnJTUUJLeFVhQVQ2RDRRZ0EiLCJleHAiOjE2MDAwMjU5MzUsImlhdCI6MTYwMDAyMDUzNH0.wPKc2SmunysC82tUkQjbbTFA0Ra34d980PqfaYPFieo";
 
 interface Slot {
     id: number;
@@ -43,19 +43,14 @@ class ZoomMettingsClient {
             agenda: 'random description'
         };
 
-        // return fetch('/api/hello').then(rsp => {
-        //     console.log(rsp);
-        //     return true;
-        // })
         return fetch(this.baseUrl + '/users/me/meetings',
             {
-                method: 'POST', // *GET, POST, PUT, DELETE, etc.
-                //mode: 'no-cors',
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + jwtToken
                 },
-                body: JSON.stringify(body) // body data type must match "Content-Type" header
+                body: JSON.stringify(body) 
             })
             .then(function (response) {
                 if (!response.ok) {
@@ -74,9 +69,7 @@ class ZoomMettingsClient {
 
     public getAll = () => {
         return fetch(this.baseUrl + '/users/me/meetings', {
-
-            method: 'GET', // *GET, POST, PUT, DELETE, etc.
-            //mode: 'no-cors',
+            method: 'GET',
             headers: {
                 'Authorization': 'Bearer ' + jwtToken
             }
