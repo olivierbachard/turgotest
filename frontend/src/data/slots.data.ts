@@ -6,7 +6,7 @@ export interface Slot {
 
 const defaultDuration = 30;
 
-export const getAvailableSlots = (): Array<Slot> => {
+export const getAllSlots = (): Array<Slot> => {
 
     const now = new Date();
     return [
@@ -28,6 +28,26 @@ export const getAvailableSlots = (): Array<Slot> => {
         {
             id: 4,
             start: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 15, 30, 0),
+            duration: defaultDuration
+        },
+        {
+            id: 5,
+            start: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 16, 0, 0),
+            duration: defaultDuration
+        },
+        {
+            id: 6,
+            start: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 16, 30, 0),
+            duration: defaultDuration
+        },
+        {
+            id: 7,
+            start: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 17, 0, 0),
+            duration: defaultDuration
+        },
+        {
+            id: 8,
+            start: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 17, 30, 0),
             duration: defaultDuration
         }
     ];

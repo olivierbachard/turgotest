@@ -71,6 +71,24 @@ class ZoomMettingsClient {
             });
 
     };
+
+    public getAll = () => {
+        return fetch(this.baseUrl + '/users/me/meetings', {
+
+            method: 'GET', // *GET, POST, PUT, DELETE, etc.
+            //mode: 'no-cors',
+            headers: {
+                'Authorization': 'Bearer ' + jwtToken
+            }
+        })
+        .then(function (response) {
+            if (!response.ok) {
+                throw Error(response.statusText);
+            }
+            return response.json();
+        })
+        .then(rsp => rsp.meetings);
+    };
 }
 
 export const zoomMettingsClient = new ZoomMettingsClient();

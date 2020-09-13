@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { SlotRow } from './slot-row.component';
-import { getAvailableSlots, Slot } from '../data/slots.data';
-import { createZoomMeeting } from '../services/api.client';
+import { getAllSlots, Slot } from '../data/slots.data';
+import { createZoomMeeting, getZoomMeeting } from '../services/api.client';
 
 export const App = () => {
 
+    const [availableSlots, setavailableSlots] = useState([] as Slot[]);
     const [showSuccessMsg, setShowSuccessMsg] = useState(false);
     const [showErrorMsg, setShowErrorMsg] = useState(false);
 
@@ -15,10 +16,25 @@ export const App = () => {
             .then(success => {
                 setShowSuccessMsg(success);
                 setShowErrorMsg(!success);
+                refreshSlots();
             });
     };
     
-    const slots = getAvailableSlots().map(s => {
+    useEffect(() => {
+        refreshSlots();
+    }, []);
+
+    const refreshSlots = () => {
+        const allSlots = getAllSlots();
+
+        getZoomMeeting()
+        .then(rsp => {
+            const displayedMeetings = allSlots.filter(s => rsp.find(m => s.start.getTime() == m.start_time.getTime()) == null);
+            setavailableSlots(displayedMeetings);
+        });
+    }
+    
+    const slots = availableSlots.map(s => {
         return (<SlotRow key={s.id} slot={s} onBookSlot={bookSlot} ></SlotRow>)
     });
 
