@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import { SlotRow } from './slot-row.component';
 import { getAvailableSlots, Slot } from '../data/slots.data';
-import { zoomMettingsClient } from '../services/zoom.client';
+import { createZoomMeeting } from '../services/api.client';
 
 export const App = () => {
 
@@ -11,8 +11,7 @@ export const App = () => {
     const [showErrorMsg, setShowErrorMsg] = useState(false);
 
     const bookSlot = (s: Slot) => {
-        zoomMettingsClient
-            .create(s)
+        createZoomMeeting(s)
             .then(success => {
                 setShowSuccessMsg(success);
                 setShowErrorMsg(!success);

@@ -1,6 +1,13 @@
-import { Slot } from "../data/slots.data"
+
+import fetch from 'node-fetch';
 
 const jwtToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOm51bGwsImlzcyI6IjFZR3JjVV9PUk91U1htQUNENG9oSEEiLCJleHAiOjE2MDA1MTA0NzYsImlhdCI6MTU5OTkwNTY3NX0.0yi1y3u2R9sM0DuMDAc1lykSo9pwKssSBOwllMz6E2I";
+
+interface Slot {
+    id: number;
+    start: string;
+    duration: number;
+}
 
 interface ZoomMeeting {
     topic: string;
@@ -29,13 +36,17 @@ class ZoomMettingsClient {
         const body: ZoomMeeting = {
             topic: 'random topic',
             type: meetingsType.scheduled,
-            start_time: slot.start.toISOString().split('.')[0] + "Z",
+            start_time: slot.start,
             duration: slot.duration,
             timezone: this.parisTimezone,
             password: '123456',
             agenda: 'random description'
         };
 
+        // return fetch('/api/hello').then(rsp => {
+        //     console.log(rsp);
+        //     return true;
+        // })
         return fetch(this.baseUrl + '/users/me/meetings',
             {
                 method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -57,7 +68,7 @@ class ZoomMettingsClient {
             })
             .catch(function (error) {
                 return false;
-            });;
+            });
 
     };
 }
